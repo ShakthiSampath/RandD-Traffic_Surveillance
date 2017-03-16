@@ -6,8 +6,9 @@ clc;
 o_centroid=zeros(20,2);
 n_centroid=zeros(20,2);
 
-source = VideoReader('Camera Highway Surveillance.mp4');
-nFrames = source.CurrentTime;
+source = VideoReader('Camera Highway Surveillance.mp4'); 
+nFrames = source.CurrentTime; % specifies from what time
+                              % should it start reading the frame
 %=============================================
 
 adptthreshold = 35;
