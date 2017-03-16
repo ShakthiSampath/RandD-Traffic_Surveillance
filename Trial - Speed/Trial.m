@@ -1,4 +1,7 @@
 %=====================Reading Video Frame By Frame========================
-video = VideoReader('Camera Highway Surveillance.mp4');
-while hasframe(video)
+v = VideoReader('Camera Highway Surveillance.mp4');
+while hasframe(v)
+    video = readFrame(v);
+end
+
     
