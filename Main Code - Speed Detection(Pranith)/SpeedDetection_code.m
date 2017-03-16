@@ -11,7 +11,7 @@ nFrames = source.CurrentTime;
 %=============================================
 
 adptthreshold = 35;
-mov(1).cdata = readFrame(source, 1);
+mov(1).cdata = readFrame(source, 1); %cdata - setting img properties
 bg = mov(1).cdata;
 bg_bw = rgb2gray(bg);
 
