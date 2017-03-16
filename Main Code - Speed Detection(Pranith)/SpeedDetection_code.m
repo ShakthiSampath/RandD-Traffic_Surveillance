@@ -1,4 +1,4 @@
-%clear all;
+clear all;
 close all;
 clc;
 %===========Declarations======================
@@ -7,13 +7,14 @@ o_centroid=zeros(20,2);
 n_centroid=zeros(20,2);
 
 source = VideoReader('Camera Highway Surveillance.mp4'); 
-%nFrames = source.NumberOfFrames;
-nFrames = source.CurrentTime; % specifies from what time
+%CurrentTime=13;
+%nFrames = source.CurrentTime; % specifies from what time
                               % should it start reading the frame
+nFrames = source.NumberOfFrames;                              
 %=============================================
 
 adptthreshold = 35;
-mov(1).cdata = readFrame(source); %cdata - setting img properties
+mov(1).cdata = read(source,1); %cdata - setting img properties
 bg = mov(1).cdata;
 bg_bw = rgb2gray(bg);
 
@@ -26,10 +27,10 @@ fg = zeros(height, wdth);
 fg=uint8(fg);
 
 % --------------------- process frames -----------------------------------
-
+% =========== Frame Differencing =========================
 
 for i = 10:nFrames
-    mov(i).cdata = readFrame(source, i);
+    mov(i).cdata = read(source, i);
     fr = mov(i).cdata;
     fr_bw = rgb2gray(fr);
     fr_diff = abs(double(fr_bw) - double(bg_bw));% differencing.
@@ -48,6 +49,7 @@ for i = 10:nFrames
     end
 
 %---------different morphological operations------------------------------
+  
     fg = bwconvhull(fg,'objects');
     fg=imfill(fg,'holes');
     se = strel('square',4);
@@ -56,7 +58,7 @@ for i = 10:nFrames
     fg = bwareaopen(fg,500);
     fg1=fg;
 
-%output(:,:,:,i) = fg1;(use this to check binary image.(implay fucntion) below)
+ %output(:,:,:,i) = fg1;%(use this to check binary image.(implay fucntion) below)
 
 %--------------------Bounding box tracking-----------------------------
     tracking=regionprops(fg1,'basic');
@@ -74,19 +76,19 @@ for i = 10:nFrames
     end
 
 %---------------------speed calculation-----------------------------------
-
+    
     v=pdist2(v1,v2);
     v=diag(v);
     v = v*2.4;
     v = v1-v2;
-    v= ((sum(v.^2,2)).^1/2)*0.72; %assuming 24fps and k is calibration factor to be calculated.
+    v= ((sum(v.^2,2)).^1/2)*0.72;
+    %assuming 24fps and k is calibration factor to be calculated.
     %v is a coloumn vector of velocities.
     o_centroid=n_centroid;
 
 %-------------------all plottings on image-------------------------
 
-    figure(1);
-    imshow(fr);
+    figure(1),imshow(fr);
     hold on
     for indices=1:length(tracking)
         box=tracking(indices).BoundingBox;
