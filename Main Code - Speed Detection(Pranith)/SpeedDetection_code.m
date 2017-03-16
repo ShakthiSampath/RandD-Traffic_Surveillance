@@ -7,12 +7,13 @@ o_centroid=zeros(20,2);
 n_centroid=zeros(20,2);
 
 source = VideoReader('Camera Highway Surveillance.mp4'); 
+%nFrames = source.NumberOfFrames;
 nFrames = source.CurrentTime; % specifies from what time
                               % should it start reading the frame
 %=============================================
 
 adptthreshold = 35;
-mov(1).cdata = readFrame(source, 1); %cdata - setting img properties
+mov(1).cdata = readFrame(source); %cdata - setting img properties
 bg = mov(1).cdata;
 bg_bw = rgb2gray(bg);
 
@@ -26,8 +27,9 @@ fg=uint8(fg);
 
 % --------------------- process frames -----------------------------------
 
-mov(i).cdata = readFrame(source, i);
+
 for i = 10:nFrames
+    mov(i).cdata = readFrame(source, i);
     fr = mov(i).cdata;
     fr_bw = rgb2gray(fr);
     fr_diff = abs(double(fr_bw) - double(bg_bw));% differencing.
