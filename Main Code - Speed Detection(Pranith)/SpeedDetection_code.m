@@ -44,7 +44,7 @@ for i = 10:nFrames
         end
     end
 
-%---------different morphological operations----------------
+%---------different morphological operations------------------------------
     fg = bwconvhull(fg,'objects');
     fg=imfill(fg,'holes');
     se = strel('square',4);
