@@ -1,4 +1,5 @@
 %=====================Reading Video Frame By Frame========================
+
 v = VideoReader('Camera Highway Surveillance.mp4');
 currAxes = axes;% axes made
 v.CurrentTime = 13;
@@ -8,4 +9,3 @@ while hasFrame(v)
     currAxes.Visible = 'off';
     pause(1/v.FrameRate);
 end
-% =================== Successful =========================================
