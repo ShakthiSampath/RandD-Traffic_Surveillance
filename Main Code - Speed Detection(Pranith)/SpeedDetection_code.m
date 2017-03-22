@@ -55,16 +55,16 @@ for i = 10:nFrames
     se = strel('square',4);
     fg=imclose(fg,se);
     fg=imfill(fg,'holes');
-    fg = bwareaopen(fg,500);
+    fg = bwareaopen(fg,500); % this is to find area
     fg1=fg;
 
  %output(:,:,:,i) = fg1;%(use this to check binary image.(implay fucntion) below)
 
 %--------------------Bounding box tracking-----------------------------
-    tracking=regionprops(fg1,'basic');
+    tracking = regionprops(fg1,'basic'); % prop of img
     % message = sprintf('This image has %d blobs in it', length(tracking));
     %uiwait(helpdlg(message));
-    n_centroid=cat(1,tracking.Centroid);
+    n_centroid=cat(1,tracking.Centroid); %cat - search
     if size(n_centroid,1)< size(o_centroid,1)
         v1=o_centroid(1:size(n_centroid,1),:);
         v2=n_centroid;
@@ -77,11 +77,13 @@ for i = 10:nFrames
 
 %---------------------speed calculation-----------------------------------
     
-    v=pdist2(v1,v2);
-    v=diag(v);
-    v = v*2.4;
+%     v = pdist2(v1,v2);
+%     v=diag(v);
+%     v = v*2.4; % 2d img hence Calibration factor
+    
     v = v1-v2;
-   % v= ((sum(v.^2,2)).^1/2)*0.72;
+    v= ((sum(v.^2,2)).^1/2)*0.72; 
+
     %assuming 24fps and k is calibration factor to be calculated.
     %v is a coloumn vector of velocities.
     o_centroid=n_centroid;
@@ -105,7 +107,7 @@ for i = 10:nFrames
         sum=sum+fr_bw(a*height/10,wdth/10)+fr_bw(a*height/10,2*wdth/10)+fr_bw(a*height/10,3*wdth/10)+fr_bw(a*height/10,4*wdth/10)+fr_bw(a*height/10,5*wdth/10)+fr_bw(a*height/10,6*wdth/10)+fr_bw(a*height/10,7*wdth/10)+fr_bw(a*height/10,8*wdth/10)+fr_bw(a*height/10,9*wdth/10);
     end
     
-    avg=sum/81;
+    avg=sum/81;% b <50
     adptthresold=0.032*avg+30;
 
 end
