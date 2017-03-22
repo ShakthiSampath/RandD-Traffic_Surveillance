@@ -1,6 +1,6 @@
 %Set up objects.
 
-videoReader = vision.VideoFileReader('viptraffic.avi','ImageColorSpace','Intensity','VideoOutputDataType','uint8');
+videoReader = vision.VideoFileReader('Camera Highway Surveillance.mp4','ImageColorSpace','Intensity','VideoOutputDataType','uint8');
 converter = vision.ImageDataTypeConverter; 
 opticalFlow = vision.OpticalFlow('ReferenceFrameDelay', 1);
 opticalFlow.OutputValue = 'Horizontal and vertical components in complex form';
