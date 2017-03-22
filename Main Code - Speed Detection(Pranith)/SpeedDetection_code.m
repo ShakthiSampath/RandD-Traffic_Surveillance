@@ -81,7 +81,7 @@ for i = 10:nFrames
     v=diag(v);
     v = v*2.4;
     v = v1-v2;
-    v= ((sum(v.^2,2)).^1/2)*0.72;
+   % v= ((sum(v.^2,2)).^1/2)*0.72;
     %assuming 24fps and k is calibration factor to be calculated.
     %v is a coloumn vector of velocities.
     o_centroid=n_centroid;
